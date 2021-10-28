@@ -26,10 +26,9 @@ interface RemixNftInterface extends ethers.utils.Interface {
     "balanceOfBatch(address[],uint256[])": FunctionFragment;
     "hasBeenMinted()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "licenseHolder(address)": FunctionFragment;
     "mintLicense(uint256,bytes,address)": FunctionFragment;
     "mintPrimary(string,address[],address[])": FunctionFragment;
-    "mintReuse(uint256)": FunctionFragment;
+    "mintRemix(uint256)": FunctionFragment;
     "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)": FunctionFragment;
     "onERC1155Received(address,address,uint256,uint256,bytes)": FunctionFragment;
     "safeBatchTransferFrom(address,address,uint256[],uint256[],bytes)": FunctionFragment;
@@ -57,10 +56,6 @@ interface RemixNftInterface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
-    functionFragment: "licenseHolder",
-    values: [string]
-  ): string;
-  encodeFunctionData(
     functionFragment: "mintLicense",
     values: [BigNumberish, BytesLike, string]
   ): string;
@@ -69,7 +64,7 @@ interface RemixNftInterface extends ethers.utils.Interface {
     values: [string, string[], string[]]
   ): string;
   encodeFunctionData(
-    functionFragment: "mintReuse",
+    functionFragment: "mintRemix",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
@@ -116,10 +111,6 @@ interface RemixNftInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "licenseHolder",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "mintLicense",
     data: BytesLike
   ): Result;
@@ -127,7 +118,7 @@ interface RemixNftInterface extends ethers.utils.Interface {
     functionFragment: "mintPrimary",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintReuse", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "mintRemix", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "onERC1155BatchReceived",
     data: BytesLike
@@ -241,20 +232,6 @@ export class RemixNft extends Contract {
       0: boolean;
     }>;
 
-    licenseHolder(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: boolean;
-    }>;
-
-    "licenseHolder(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: boolean;
-    }>;
-
     mintLicense(
       _nonce: BigNumberish,
       _signature: BytesLike,
@@ -271,24 +248,24 @@ export class RemixNft extends Contract {
 
     mintPrimary(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
     "mintPrimary(string,address[],address[])"(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    mintReuse(
+    mintRemix(
       _amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "mintReuse(uint256)"(
+    "mintRemix(uint256)"(
       _amount: BigNumberish,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
@@ -460,13 +437,6 @@ export class RemixNft extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  licenseHolder(arg0: string, overrides?: CallOverrides): Promise<boolean>;
-
-  "licenseHolder(address)"(
-    arg0: string,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
-
   mintLicense(
     _nonce: BigNumberish,
     _signature: BytesLike,
@@ -483,24 +453,24 @@ export class RemixNft extends Contract {
 
   mintPrimary(
     uri_: string,
-    _reuseTokens: string[],
+    _remixTokens: string[],
     _licenseTokens: string[],
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   "mintPrimary(string,address[],address[])"(
     uri_: string,
-    _reuseTokens: string[],
+    _remixTokens: string[],
     _licenseTokens: string[],
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  mintReuse(
+  mintRemix(
     _amount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  "mintReuse(uint256)"(
+  "mintRemix(uint256)"(
     _amount: BigNumberish,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
@@ -654,13 +624,6 @@ export class RemixNft extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    licenseHolder(arg0: string, overrides?: CallOverrides): Promise<boolean>;
-
-    "licenseHolder(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
-
     mintLicense(
       _nonce: BigNumberish,
       _signature: BytesLike,
@@ -677,21 +640,21 @@ export class RemixNft extends Contract {
 
     mintPrimary(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     "mintPrimary(string,address[],address[])"(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mintReuse(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mintRemix(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    "mintReuse(uint256)"(
+    "mintRemix(uint256)"(
       _amount: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -872,13 +835,6 @@ export class RemixNft extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    licenseHolder(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "licenseHolder(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     mintLicense(
       _nonce: BigNumberish,
       _signature: BytesLike,
@@ -895,21 +851,21 @@ export class RemixNft extends Contract {
 
     mintPrimary(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<BigNumber>;
 
     "mintPrimary(string,address[],address[])"(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    mintReuse(_amount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
+    mintRemix(_amount: BigNumberish, overrides?: Overrides): Promise<BigNumber>;
 
-    "mintReuse(uint256)"(
+    "mintRemix(uint256)"(
       _amount: BigNumberish,
       overrides?: Overrides
     ): Promise<BigNumber>;
@@ -1067,16 +1023,6 @@ export class RemixNft extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    licenseHolder(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "licenseHolder(address)"(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mintLicense(
       _nonce: BigNumberish,
       _signature: BytesLike,
@@ -1093,24 +1039,24 @@ export class RemixNft extends Contract {
 
     mintPrimary(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
     "mintPrimary(string,address[],address[])"(
       uri_: string,
-      _reuseTokens: string[],
+      _remixTokens: string[],
       _licenseTokens: string[],
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    mintReuse(
+    mintRemix(
       _amount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "mintReuse(uint256)"(
+    "mintRemix(uint256)"(
       _amount: BigNumberish,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;

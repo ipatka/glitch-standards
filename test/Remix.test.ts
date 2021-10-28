@@ -58,7 +58,7 @@ describe('Remix NFT', function () {
 
     it('Allows remixer to mint reuse token', async function () {
       await remix.mintPrimary("test", [], [])
-      await remixAsRemixer.mintReuse(5)
+      await remixAsRemixer.mintRemix(5)
       expect(await remix.balanceOf(remixer.address, 1)).to.equal(5)
     })
 
@@ -75,7 +75,7 @@ describe('Remix NFT', function () {
       const msgHash = ethers.utils.hashMessage(ethers.utils.arrayify(ethers.utils.solidityKeccak256(['uint256', 'address', 'address'], [1, remixer.address, remix.address])))
       const sig = await author.signMessage(msgHash)
       await remixAsRemixer.mintLicense(1, sig, author.address)
-      await remixAsRemixer.mintReuse(1)
+      await remixAsRemixer.mintRemix(1)
       
       const newRemixAbstract = await RemixNft.deploy("test")
       const newRemix = (await newRemixAbstract.connect(remixer)) as RemixNft

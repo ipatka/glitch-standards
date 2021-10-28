@@ -30,7 +30,7 @@ use(solidity)
 
 const zeroAddress = '0x0000000000000000000000000000000000000000'
 
-describe.only('Meme NFT', function () {
+describe('Meme NFT', function () {
   let meme: MemeNft
   let memeAsRemixer: MemeNft
 
