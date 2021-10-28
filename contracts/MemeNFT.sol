@@ -19,9 +19,12 @@ interface IMemeNFT {
         returns (uint256);
 }
 
+/// @title Meme NFT Standard
+/// @dev 
+///
 contract MerkleRoyalties {
     mapping(address => mapping(address => uint256)) public lastClaimed;
-    
+
     mapping(address => uint256) public contractBalance;
 
     function claim(
@@ -41,8 +44,6 @@ contract MerkleRoyalties {
             IMemeNFT _meme = IMemeNFT(_memeAddress);
             uint256 _lastClaimed = lastClaimed[_memeAddress][msg.sender];
             uint256 _royaltyCount = _meme.royaltyCount();
-            console.log("last %s", _lastClaimed);
-            console.log("count %s", _royaltyCount);
 
             require(
                 _verify(
@@ -59,26 +60,24 @@ contract MerkleRoyalties {
                 _lastClaimed + 1,
                 _royaltyCount
             );
-            console.log("val %s", _royaltyValues);
 
             lastClaimed[_tokens[index]][msg.sender] = _royaltyCount;
 
             uint256 _claimValue = (_royaltyValues * _split) / 10000;
             contractBalance[_memeAddress] -= _claimValue; // Will revert on underflow
             _sumClaims += _claimValue;
-            console.log("claim %s", _claimValue);
         }
         (bool _success, ) = msg.sender.call{value: _sumClaims}(""); /*Send ETH to sink first*/
         require(_success, "could not send");
         return true;
     }
-    
-        receive() external payable {
-            // Track pending royalties from source contracts
-            // Important so ETH cannot be stolen through malicious implementation of Meme contract
-            contractBalance[msg.sender] += msg.value;
-            // TODO maybe also require that to send ETH here you have to have deployed your Meme clone from the same factory
-        }
+
+    receive() external payable {
+        // Track pending royalties from source contracts
+        // Important so ETH cannot be stolen through malicious implementation of Meme contract
+        contractBalance[msg.sender] += msg.value;
+        // TODO maybe also require that to send ETH here you have to have deployed your Meme clone from the same factory
+    }
 
     /*****************
     MERKLE DROP HELPERS
@@ -188,8 +187,7 @@ contract MemeNFT is ERC1155, IMemeNFT {
     ) internal override {
         for (uint256 index = 0; index < ids.length; index++) {
             require(
-                ids[index] != uint256(TokenTypes.Badge) ||
-                from == address(0),
+                ids[index] != uint256(TokenTypes.Badge) || from == address(0),
                 "Badges are not transferable"
             );
         }
@@ -238,16 +236,15 @@ contract MemeNFT is ERC1155, IMemeNFT {
             10000;
         uint256 _toOwner = (_price * (10000 - baseRoyalties)) / 10000;
         uint256 _toRoyalties = (_price * baseRoyalties) / 10000;
-        
-        console.log("toOwner %s", _toOwner);
-        console.log("toRoyalties %s", _toRoyalties);
 
         _royaltyCount++;
         royaltyValues.push(_toRoyalties);
 
         (bool _successOwner, ) = _currentOwner.call{value: _toOwner}("");
         require(_successOwner, "failed to send to owner");
-        (bool _successRoyaltise, ) = royaltiesSplitter.call{value: _toRoyalties}("");
+        (bool _successRoyaltise, ) = royaltiesSplitter.call{
+            value: _toRoyalties
+        }("");
         require(_successOwner, "failed to send to royalties");
         _safeTransferFrom(
             _currentOwner,
@@ -268,7 +265,7 @@ contract MemeNFT is ERC1155, IMemeNFT {
     {
         uint256 _sum;
         for (uint256 index = _start; index <= _end; index++) {
-            _sum += royaltyValues[index-1];
+            _sum += royaltyValues[index - 1];
         }
         return _sum;
     }
