@@ -31,8 +31,8 @@ interface MemeNftInterface extends ethers.utils.Interface {
     "enterBid(uint256)": FunctionFragment;
     "hasBeenMinted()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
+    "licenseActive(address)": FunctionFragment;
     "minPurchasePrice()": FunctionFragment;
-    "mintActive(address)": FunctionFragment;
     "mintPrimary(string,address[],uint256,bytes32,uint256)": FunctionFragment;
     "purchase(address)": FunctionFragment;
     "royaltiesSplitter()": FunctionFragment;
@@ -75,10 +75,13 @@ interface MemeNftInterface extends ethers.utils.Interface {
     values: [string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "licenseActive",
+    values: [string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "minPurchasePrice",
     values?: undefined
   ): string;
-  encodeFunctionData(functionFragment: "mintActive", values: [string]): string;
   encodeFunctionData(
     functionFragment: "mintPrimary",
     values: [string, string[], BigNumberish, BytesLike, BigNumberish]
@@ -144,10 +147,13 @@ interface MemeNftInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "licenseActive",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "minPurchasePrice",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintActive", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "mintPrimary",
     data: BytesLike
@@ -311,6 +317,20 @@ export class MemeNft extends Contract {
       0: boolean;
     }>;
 
+    licenseActive(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
+
+    "licenseActive(address)"(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<{
+      0: boolean;
+    }>;
+
     minPurchasePrice(overrides?: CallOverrides): Promise<{
       0: BigNumber;
     }>;
@@ -319,23 +339,9 @@ export class MemeNft extends Contract {
       0: BigNumber;
     }>;
 
-    mintActive(
-      _holder: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: boolean;
-    }>;
-
-    "mintActive(address)"(
-      _holder: string,
-      overrides?: CallOverrides
-    ): Promise<{
-      0: boolean;
-    }>;
-
     mintPrimary(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -344,7 +350,7 @@ export class MemeNft extends Contract {
 
     "mintPrimary(string,address[],uint256,bytes32,uint256)"(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -572,20 +578,20 @@ export class MemeNft extends Contract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
+  licenseActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
 
-  "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-  mintActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
-
-  "mintActive(address)"(
+  "licenseActive(address)"(
     _holder: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
+  minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+  "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
   mintPrimary(
     uri_: string,
-    _badges: string[],
+    _licenses: string[],
     _baseRoyalties: BigNumberish,
     _royaltiesRoot: BytesLike,
     _basePrice: BigNumberish,
@@ -594,7 +600,7 @@ export class MemeNft extends Contract {
 
   "mintPrimary(string,address[],uint256,bytes32,uint256)"(
     uri_: string,
-    _badges: string[],
+    _licenses: string[],
     _baseRoyalties: BigNumberish,
     _royaltiesRoot: BytesLike,
     _basePrice: BigNumberish,
@@ -784,20 +790,20 @@ export class MemeNft extends Contract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
+    licenseActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
 
-    "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
-
-    "mintActive(address)"(
+    "licenseActive(address)"(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
+    minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     mintPrimary(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -806,7 +812,7 @@ export class MemeNft extends Contract {
 
     "mintPrimary(string,address[],uint256,bytes32,uint256)"(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -1010,20 +1016,23 @@ export class MemeNft extends Contract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintActive(_holder: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    "mintActive(address)"(
+    licenseActive(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    "licenseActive(address)"(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    minPurchasePrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    "minPurchasePrice()"(overrides?: CallOverrides): Promise<BigNumber>;
+
     mintPrimary(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -1032,7 +1041,7 @@ export class MemeNft extends Contract {
 
     "mintPrimary(string,address[],uint256,bytes32,uint256)"(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -1216,25 +1225,25 @@ export class MemeNft extends Contract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    licenseActive(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    "licenseActive(address)"(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     minPurchasePrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     "minPurchasePrice()"(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    mintActive(
-      _holder: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    "mintActive(address)"(
-      _holder: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     mintPrimary(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,
@@ -1243,7 +1252,7 @@ export class MemeNft extends Contract {
 
     "mintPrimary(string,address[],uint256,bytes32,uint256)"(
       uri_: string,
-      _badges: string[],
+      _licenses: string[],
       _baseRoyalties: BigNumberish,
       _royaltiesRoot: BytesLike,
       _basePrice: BigNumberish,

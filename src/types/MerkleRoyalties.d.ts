@@ -151,14 +151,14 @@ export class MerkleRoyalties extends Contract {
       _proofs: BytesLike[][],
       _splitPoints: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
 
     "claim(address[],bytes32[][],uint256[])"(
       _tokens: string[],
       _proofs: BytesLike[][],
       _splitPoints: BigNumberish[],
       overrides?: CallOverrides
-    ): Promise<boolean>;
+    ): Promise<void>;
 
     contractBalance(
       arg0: string,

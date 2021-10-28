@@ -21,13 +21,16 @@ import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
 interface IMemeNftInterface extends ethers.utils.Interface {
   functions: {
-    "mintActive(address)": FunctionFragment;
+    "licenseActive(address)": FunctionFragment;
     "royaltyCount()": FunctionFragment;
     "royaltyMerkleRoot()": FunctionFragment;
     "sumRoyalties(uint256,uint256)": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "mintActive", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "licenseActive",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "royaltyCount",
     values?: undefined
@@ -41,7 +44,10 @@ interface IMemeNftInterface extends ethers.utils.Interface {
     values: [BigNumberish, BigNumberish]
   ): string;
 
-  decodeFunctionResult(functionFragment: "mintActive", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "licenseActive",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "royaltyCount",
     data: BytesLike
@@ -72,14 +78,14 @@ export class IMemeNft extends Contract {
   interface: IMemeNftInterface;
 
   functions: {
-    mintActive(
+    licenseActive(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<{
       0: boolean;
     }>;
 
-    "mintActive(address)"(
+    "licenseActive(address)"(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<{
@@ -119,9 +125,9 @@ export class IMemeNft extends Contract {
     }>;
   };
 
-  mintActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
+  licenseActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
 
-  "mintActive(address)"(
+  "licenseActive(address)"(
     _holder: string,
     overrides?: CallOverrides
   ): Promise<boolean>;
@@ -147,9 +153,9 @@ export class IMemeNft extends Contract {
   ): Promise<BigNumber>;
 
   callStatic: {
-    mintActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
+    licenseActive(_holder: string, overrides?: CallOverrides): Promise<boolean>;
 
-    "mintActive(address)"(
+    "licenseActive(address)"(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<boolean>;
@@ -178,9 +184,12 @@ export class IMemeNft extends Contract {
   filters: {};
 
   estimateGas: {
-    mintActive(_holder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    licenseActive(
+      _holder: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    "mintActive(address)"(
+    "licenseActive(address)"(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
@@ -207,12 +216,12 @@ export class IMemeNft extends Contract {
   };
 
   populateTransaction: {
-    mintActive(
+    licenseActive(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    "mintActive(address)"(
+    "licenseActive(address)"(
       _holder: string,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

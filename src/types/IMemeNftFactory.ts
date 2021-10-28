@@ -25,7 +25,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "mintActive",
+    name: "licenseActive",
     outputs: [
       {
         internalType: "bool",
