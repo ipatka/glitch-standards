@@ -82,17 +82,17 @@ contract RemixNFT is ERC1155, ERC1155Holder {
             IERC1155(_licenseTokens[index]).safeTransferFrom(
                 msg.sender,
                 address(this),
-                uint256(TokenTypes.Remix),
+                uint256(TokenTypes.License),
                 1,
                 ""
             );
         }
 
         for (uint256 index = 0; index < _remixTokens.length; index++) {
-            IERC1155(_licenseTokens[index]).safeTransferFrom(
+            IERC1155(_remixTokens[index]).safeTransferFrom(
                 msg.sender,
                 address(this),
-                uint256(TokenTypes.License),
+                uint256(TokenTypes.Remix),
                 1,
                 ""
             );

@@ -87,6 +87,20 @@ describe('Remix NFT', function () {
       expect(await newRemix.balanceOf(remixer.address, 0)).to.equal(1)
     })
 
+    it('Allows remixer to mint new primary token with remix from previous', async function () {
+      await remix.mintPrimary("test", [], [])
+      await remixAsRemixer.mintRemix(1)
+      
+      const newRemixAbstract = await RemixNft.deploy("test")
+      const newRemix = (await newRemixAbstract.connect(remixer)) as RemixNft
+      await remixAsRemixer.setApprovalForAll(newRemix.address, true)
+
+      await newRemix.mintPrimary("test", [remix.address], [])
+      
+
+      expect(await newRemix.balanceOf(remixer.address, 0)).to.equal(1)
+    })
+
   })
   })
 
