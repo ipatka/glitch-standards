@@ -29,7 +29,7 @@ interface RemixInterface extends ethers.utils.Interface {
     "countdownTime()": FunctionFragment;
     "exists(uint256)": FunctionFragment;
     "harvestRoyalties(address)": FunctionFragment;
-    "hasBeenMinted()": FunctionFragment;
+    "hasBeenPurchased()": FunctionFragment;
     "increasePoints()": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
     "licenseActive(address)": FunctionFragment;
@@ -74,7 +74,7 @@ interface RemixInterface extends ethers.utils.Interface {
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "hasBeenMinted",
+    functionFragment: "hasBeenPurchased",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -153,7 +153,7 @@ interface RemixInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "hasBeenMinted",
+    functionFragment: "hasBeenPurchased",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -331,11 +331,11 @@ export class Remix extends Contract {
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    hasBeenMinted(overrides?: CallOverrides): Promise<{
+    hasBeenPurchased(overrides?: CallOverrides): Promise<{
       0: boolean;
     }>;
 
-    "hasBeenMinted()"(overrides?: CallOverrides): Promise<{
+    "hasBeenPurchased()"(overrides?: CallOverrides): Promise<{
       0: boolean;
     }>;
 
@@ -611,9 +611,9 @@ export class Remix extends Contract {
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
-  hasBeenMinted(overrides?: CallOverrides): Promise<boolean>;
+  hasBeenPurchased(overrides?: CallOverrides): Promise<boolean>;
 
-  "hasBeenMinted()"(overrides?: CallOverrides): Promise<boolean>;
+  "hasBeenPurchased()"(overrides?: CallOverrides): Promise<boolean>;
 
   increasePoints(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -832,9 +832,9 @@ export class Remix extends Contract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    hasBeenMinted(overrides?: CallOverrides): Promise<boolean>;
+    hasBeenPurchased(overrides?: CallOverrides): Promise<boolean>;
 
-    "hasBeenMinted()"(overrides?: CallOverrides): Promise<boolean>;
+    "hasBeenPurchased()"(overrides?: CallOverrides): Promise<boolean>;
 
     increasePoints(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1095,9 +1095,9 @@ export class Remix extends Contract {
       overrides?: Overrides
     ): Promise<BigNumber>;
 
-    hasBeenMinted(overrides?: CallOverrides): Promise<BigNumber>;
+    hasBeenPurchased(overrides?: CallOverrides): Promise<BigNumber>;
 
-    "hasBeenMinted()"(overrides?: CallOverrides): Promise<BigNumber>;
+    "hasBeenPurchased()"(overrides?: CallOverrides): Promise<BigNumber>;
 
     increasePoints(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1317,9 +1317,11 @@ export class Remix extends Contract {
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    hasBeenMinted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasBeenPurchased(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    "hasBeenMinted()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    "hasBeenPurchased()"(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     increasePoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
