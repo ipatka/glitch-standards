@@ -20,23 +20,25 @@ import { BytesLike } from "@ethersproject/bytes";
 import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 
-interface GuardManagerInterface extends ethers.utils.Interface {
+interface IRemixInterface extends ethers.utils.Interface {
   functions: {
-    "setGuard(address)": FunctionFragment;
+    "requestDerivative(address)": FunctionFragment;
   };
 
-  encodeFunctionData(functionFragment: "setGuard", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "requestDerivative",
+    values: [string]
+  ): string;
 
-  decodeFunctionResult(functionFragment: "setGuard", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "requestDerivative",
+    data: BytesLike
+  ): Result;
 
-  events: {
-    "ChangedGuard(address)": EventFragment;
-  };
-
-  getEvent(nameOrSignatureOrTopic: "ChangedGuard"): EventFragment;
+  events: {};
 }
 
-export class GuardManager extends Contract {
+export class IRemix extends Contract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -47,57 +49,61 @@ export class GuardManager extends Contract {
   removeAllListeners(eventName: EventFilter | string): this;
   removeListener(eventName: any, listener: Listener): this;
 
-  interface: GuardManagerInterface;
+  interface: IRemixInterface;
 
   functions: {
-    setGuard(
-      guard: string,
+    requestDerivative(
+      arg0: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
 
-    "setGuard(address)"(
-      guard: string,
+    "requestDerivative(address)"(
+      arg0: string,
       overrides?: Overrides
     ): Promise<ContractTransaction>;
   };
 
-  setGuard(guard: string, overrides?: Overrides): Promise<ContractTransaction>;
+  requestDerivative(
+    arg0: string,
+    overrides?: Overrides
+  ): Promise<ContractTransaction>;
 
-  "setGuard(address)"(
-    guard: string,
+  "requestDerivative(address)"(
+    arg0: string,
     overrides?: Overrides
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    setGuard(guard: string, overrides?: CallOverrides): Promise<void>;
-
-    "setGuard(address)"(
-      guard: string,
+    requestDerivative(
+      arg0: string,
       overrides?: CallOverrides
-    ): Promise<void>;
+    ): Promise<boolean>;
+
+    "requestDerivative(address)"(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
-  filters: {
-    ChangedGuard(guard: null): EventFilter;
-  };
+  filters: {};
 
   estimateGas: {
-    setGuard(guard: string, overrides?: Overrides): Promise<BigNumber>;
+    requestDerivative(arg0: string, overrides?: Overrides): Promise<BigNumber>;
 
-    "setGuard(address)"(
-      guard: string,
+    "requestDerivative(address)"(
+      arg0: string,
       overrides?: Overrides
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    setGuard(
-      guard: string,
+    requestDerivative(
+      arg0: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
 
-    "setGuard(address)"(
-      guard: string,
+    "requestDerivative(address)"(
+      arg0: string,
       overrides?: Overrides
     ): Promise<PopulatedTransaction>;
   };

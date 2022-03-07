@@ -5,14 +5,11 @@
 import { Contract, Signer } from "ethers";
 import { Provider } from "@ethersproject/providers";
 
-import type { IRemixNft } from "./IRemixNft";
+import type { IRemix } from "./IRemix";
 
-export class IRemixNftFactory {
-  static connect(
-    address: string,
-    signerOrProvider: Signer | Provider
-  ): IRemixNft {
-    return new Contract(address, _abi, signerOrProvider) as IRemixNft;
+export class IRemixFactory {
+  static connect(address: string, signerOrProvider: Signer | Provider): IRemix {
+    return new Contract(address, _abi, signerOrProvider) as IRemix;
   }
 }
 
@@ -25,7 +22,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "licenseHolder",
+    name: "requestDerivative",
     outputs: [
       {
         internalType: "bool",
@@ -33,7 +30,7 @@ const _abi = [
         type: "bool",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
